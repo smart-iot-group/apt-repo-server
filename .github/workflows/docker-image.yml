@@ -32,11 +32,10 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ghcr.io/smart-iot-group/apt-repo-server:${{ github.sha }}
+          tags: ghcr.io/${{ github.repository_owner }}/apt-repo-server:${{ github.sha }}:lastest
 
       - name: Set Labels for Container Image
         run: |
-          docker build . --label "org.opencontainers.image.source=https://github.com/smart-iot-group/apt-repo-server" \
+          docker build . --label "org.opencontainers.image.source=https://github.com/${{ github.repository }}" \
                          --label "org.opencontainers.image.description=Automated APT Repository Server" \
                          --label "org.opencontainers.image.licenses=MIT"
-
