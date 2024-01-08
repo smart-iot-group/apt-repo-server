@@ -14,8 +14,6 @@ ADD nginx.conf /etc/nginx/sites-enabled/default
 ADD startup.sh /
 ADD scan.py /
 
-ENV DISTS trusty
-ENV ARCHS amd64,i386
 EXPOSE 80
 VOLUME /data
 ENTRYPOINT ["/startup.sh"]
