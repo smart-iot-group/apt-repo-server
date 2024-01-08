@@ -2,7 +2,7 @@
 
 import subprocess as sp
 from gevent.queue import Queue
-from Queue import Empty as QueueEmpty
+from queue import Empty as QueueEmpty  # Changed from 'Queue' to 'queue' for Python 3 compatibility
 from gevent import spawn
 import signal
 from gevent import select
@@ -22,12 +22,15 @@ def info(msg):
 
 def do_scan():
     info('Scanning...')
-    for dist in os.getenv('DISTS', 'trusty').split(','):
-        for arch in os.getenv('ARCHS', 'amd64,i386').split(','):
-            path = '/data/dists/{}/main/binary-{}'.format(dist, arch)
+    # Define your distribution structure
+    dist_base_path = '/data/dists/bg-gateway'
+    for dist in os.getenv('DISTS', 'beta,stable').split(','):
+        dist_path = f"{dist_base_path}/{dist}"
+        for arch in os.getenv('ARCHS', 'armhf').split(','):
+            path = f"{dist_path}/binary-{arch}"
             if not os.path.exists(path):
                 os.makedirs(path)
-            cmd = 'dpkg-scanpackages -m . | gzip -9c > {0}/Packages.gz'.format(path)
+            cmd = f'dpkg-scanpackages -m . | gzip -9c > {path}/Packages.gz'
             sp.check_call(cmd, shell=True, close_fds=True)
     info('Scanning...done')
 
@@ -65,8 +68,7 @@ def main():
 
     queue = Queue()
 
-    cmd = ['inotifywait', '-rm', '-e',
-           'close_write,moved_to,moved_from,delete', '.']
+    cmd = ['inotifywait', '-rm', '-e', 'close_write,moved_to,moved_from,delete', '.']
     p = sp.Popen(cmd, stdout=sp.PIPE, stderr=sp.PIPE, close_fds=True)
     t = spawn(loop)
 
