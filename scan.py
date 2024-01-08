@@ -19,8 +19,7 @@ def info(msg):
 
 def do_scan():
     info('Scanning...')
-    # Define your distribution structure
-    dist_base_path = '/data/dists/bg-gateway'
+    dist_base_path = '/data/dists/'
     for dist in os.getenv('DISTS', 'beta,stable').split(','):
         dist_path = f"{dist_base_path}/{dist}"
         for arch in os.getenv('ARCHS', 'armhf').split(','):
