@@ -8,9 +8,7 @@ import signal
 from gevent import select
 import os
 
-
 log = open('/dev/stdout', 'w')
-
 
 def info(msg):
     if msg[-1] == '\n':
@@ -18,7 +16,6 @@ def info(msg):
     else:
         log.write(msg)
     log.flush()
-
 
 def do_scan():
     info('Scanning...')
@@ -33,7 +30,6 @@ def do_scan():
             cmd = f'dpkg-scanpackages -m . | gzip -9c > {path}/Packages.gz'
             sp.check_call(cmd, shell=True, close_fds=True)
     info('Scanning...done')
-
 
 def main():
     def loop():
