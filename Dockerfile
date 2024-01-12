@@ -3,6 +3,10 @@ MAINTAINER Tristan Jakobi <t.jakobi@smart-iot.solutions>
 
 ENV DEBIAN_FRONTEND noninteractive
 
+ENV SSH_USER=default_user
+ENV SSH_PASSWORD=default_password
+ENV SSH_PERMIT_ROOT_LOGIN=no
+
 RUN apt-get update \
     && apt-get install -y --force-yes --no-install-recommends dpkg-dev nginx inotify-tools supervisor python-gevent openssh-server \
     && apt-get autoclean \
@@ -18,10 +22,8 @@ ADD nginx.conf /etc/nginx/sites-enabled/default
 ADD startup.sh /
 ADD scan.py /
 
-# Expose ports and define a volume
 EXPOSE 80
 EXPOSE 22
 VOLUME /data
 
-# Start Supervisor
 CMD ["/usr/bin/supervisord"]
