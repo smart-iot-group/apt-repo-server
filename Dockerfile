@@ -10,15 +10,18 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir /var/run/sshd
-RUN useradd -m myuser && echo "myuser:mypassword" | chpasswd
-RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN useradd -m $SSH_USER && echo "$SSH_USER:$SSH_PASSWORD" | chpasswd
+RUN sed -i "s/#PermitRootLogin prohibit-password/PermitRootLogin $SSH_PERMIT_ROOT_LOGIN/" /etc/ssh/sshd_config
 
 ADD supervisord.conf /etc/supervisor/
 ADD nginx.conf /etc/nginx/sites-enabled/default
 ADD startup.sh /
 ADD scan.py /
 
+# Expose ports and define a volume
 EXPOSE 80
-EXPOSE 22 
+EXPOSE 22
 VOLUME /data
+
+# Start Supervisor
 CMD ["/usr/bin/supervisord"]
