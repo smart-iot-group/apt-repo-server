@@ -26,4 +26,4 @@ EXPOSE 80
 EXPOSE 22
 VOLUME /data
 
-CMD ["/usr/bin/supervisord"]
+ENTRYPOINT ["/startup.sh"]
