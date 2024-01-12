@@ -19,6 +19,6 @@ ADD startup.sh /
 ADD scan.py /
 
 EXPOSE 80
-EXPOSE 22  # Expose SSH port
+EXPOSE 22 
 VOLUME /data
 CMD ["/usr/bin/supervisord"]
