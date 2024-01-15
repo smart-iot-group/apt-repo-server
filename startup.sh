@@ -14,7 +14,7 @@ trap _term SIGTERM SIGINT
 mkdir -p /data/dists/trusty/main/binary-amd64/
 
 # Start supervisord
-/usr/bin/supervisord -c /etc/supervisor/supervisord.conf
+/usr/bin/supervisord -c /etc/supervisor/supervisord.conf -n -e debug
 
 # Wait for supervisord to exit
 wait $!
