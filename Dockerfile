@@ -7,7 +7,7 @@ ENV SSH_PASSWORD=default_password
 ENV SSH_PERMIT_ROOT_LOGIN=no
 
 RUN apt-get update \
-    && apt-get install -y --force-yes --no-install-recommends dpkg-dev nginx inotify-tools supervisor python-gevent openssh-server \
+    && apt-get install -y --no-install-recommends dpkg-dev nginx inotify-tools supervisor python3-gevent openssh-server \
     && apt-get autoclean \
     && apt-get autoremove \
     && rm -rf /var/lib/apt/lists/*
