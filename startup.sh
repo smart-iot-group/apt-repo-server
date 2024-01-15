@@ -13,6 +13,13 @@ trap _term SIGTERM SIGINT
 
 mkdir -p /data/dists/trusty/main/binary-amd64/
 
+
+# Start rsyslog for logging
+service rsyslog start
+
+# Start SSH service
+service ssh start
+
 # Start supervisord
 /usr/bin/supervisord -c /etc/supervisor/supervisord.conf -n -e debug
 
