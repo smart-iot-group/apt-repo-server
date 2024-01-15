@@ -1,4 +1,4 @@
-FROM ubuntu:14.04.3
+FROM ubuntu:20.04
 MAINTAINER Tristan Jakobi <t.jakobi@smart-iot.solutions>
 
 ENV DEBIAN_FRONTEND noninteractive
